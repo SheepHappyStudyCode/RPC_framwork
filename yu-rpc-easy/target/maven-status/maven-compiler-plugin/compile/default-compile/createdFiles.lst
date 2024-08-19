@@ -1,0 +1,9 @@
+com\yupi\yurpc\serializer\Serializer.class
+com\yupi\yurpc\model\RpcRequest$RpcRequestBuilder.class
+com\yupi\yurpc\model\RpcResponse.class
+com\yupi\yurpc\proxy\ServiceProxyFactory.class
+com\yupi\yurpc\serializer\JdkSerializer.class
+com\yupi\yurpc\model\RpcRequest.class
+com\yupi\yurpc\model\RpcResponse$RpcResponseBuilder.class
+com\yupi\yurpc\proxy\ServiceProxy.class
+com\yupi\yurpc\server\HttpServerHandler.class
