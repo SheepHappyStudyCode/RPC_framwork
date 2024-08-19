@@ -7,7 +7,7 @@ import com.yupi.yurpc.server.HttpServer;
 import com.yupi.yurpc.server.VertxHttpServer;
 
 /**
- * Hello world!
+ *
  *
  */
 public class App 

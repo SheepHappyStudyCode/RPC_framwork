@@ -2,7 +2,6 @@ package com.yupi.yurpc;
 
 
 import com.yupi.yurpc.config.RpcConfig;
-import com.yupi.yurpc.constant.RpcConstant;
 import com.yupi.yurpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,7 +11,7 @@ public class RpcApplication {
     private static volatile RpcConfig rpcConfig;
 
     private static RpcConfig init(){
-        RpcConfig newRpcConfig = ConfigUtils.loadConfig(RpcConfig.class, RpcConstant.DEFAULT_CONFIG_PREFIX);
+        RpcConfig newRpcConfig = ConfigUtils.loadConfig(null);
         log.info("init config: " + newRpcConfig);
         return newRpcConfig;
 
