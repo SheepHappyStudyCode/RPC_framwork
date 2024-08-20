@@ -1,7 +1,6 @@
 package com.yupi.yurpc.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.config.RpcConfigWrapper;
 import org.yaml.snakeyaml.Yaml;
@@ -19,7 +18,8 @@ public class ConfigUtils {
 
         Yaml yaml = new Yaml();
         try {
-            InputStream input = new RpcApplication().getClass().getClassLoader().getResourceAsStream(configFileStringBuilder.toString());
+            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(configFileStringBuilder.toString());
+//            InputStream input = new RpcApplication().getClass().getClassLoader().getResourceAsStream(configFileStringBuilder.toString());
             RpcConfigWrapper configWrapper = yaml.loadAs(input, RpcConfigWrapper.class);
             RpcConfig rpcConfig = configWrapper.getRpc();
             return rpcConfig;

@@ -1,5 +1,7 @@
 package com.yupi.yurpc.proxy;
 
+import com.yupi.yurpc.RpcApplication;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -9,6 +11,14 @@ import java.lang.reflect.Proxy;
 public class ServiceProxyFactory{
 
     public static <T> T getProxy(Class<T> serviceClass){
+        // 如果是mock模式，则返回mock代理对象
+        if(RpcApplication.getRpcConfig().getMock()){
+            return (T) Proxy.newProxyInstance(
+                    serviceClass.getClassLoader(),
+                    new Class[]{serviceClass},
+                    new MockServiceProxy());
+        }
+        // 否则返回普通代理对象
         return (T) Proxy.newProxyInstance(
                 serviceClass.getClassLoader(),
                 new Class[]{serviceClass},
