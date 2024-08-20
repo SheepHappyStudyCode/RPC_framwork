@@ -1,0 +1,3 @@
+jdk=com.yupi.yurpc.serializer.JdkSerializer
+hessian=com.yupi.yurpc.serializer.HessianSerializer
+

@@ -2,3 +2,4 @@ rpc:
   name: yurpc
   version: 1.0.0
   serverPort: 8082
+  mock: false

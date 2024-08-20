@@ -1,5 +1,6 @@
 package com.yupi.yurpc.config;
 
+import com.yupi.yurpc.serializer.SerializerKeys;
 import lombok.Data;
 
 @Data
@@ -16,4 +17,6 @@ public class RpcConfig {
      * 模拟调用
      */
     private Boolean mock = false;
+
+    private String serializer = SerializerKeys.JDK;
 }

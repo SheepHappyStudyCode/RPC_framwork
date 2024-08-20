@@ -19,9 +19,13 @@ public class App
         user.setUsername("张三");
         user.setDesc("我是张三，但我遵纪守法");
 
-        int res = userService.getNumber(user);
+        User newUser = userService.changeUsername(user);
 
-        System.out.println("res = " + res);
+        if(newUser != null){
+            System.out.println("调用成功");
+            System.out.println(newUser.getUsername());
+
+        }
 
 
 

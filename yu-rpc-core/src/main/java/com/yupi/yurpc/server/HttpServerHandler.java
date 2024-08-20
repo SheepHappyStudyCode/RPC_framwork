@@ -1,9 +1,11 @@
 package com.yupi.yurpc.server;
 
+import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
 import com.yupi.yurpc.registry.LocalRegistry;
-import com.yupi.yurpc.serializer.JdkSerializer;
+import com.yupi.yurpc.serializer.Serializer;
+import com.yupi.yurpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -20,7 +22,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
         System.out.println("receive request: " + request.method() + " " + request.uri());
 
         // 指定序列化器
-        JdkSerializer serializer = new JdkSerializer();
+        Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
         // 异步处理 http 请求
         request.bodyHandler(body ->{
@@ -69,7 +71,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
 
     }
 
-    private void doResponse(HttpServerRequest request, RpcResponse response, JdkSerializer serializer) {
+    private void doResponse(HttpServerRequest request, RpcResponse response, Serializer serializer) {
         HttpServerResponse httpServerResponse = request.response().putHeader("content-type", "application/json");
 
         try {

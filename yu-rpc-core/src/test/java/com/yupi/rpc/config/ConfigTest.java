@@ -3,6 +3,7 @@ package com.yupi.rpc.config;
 import com.yupi.yurpc.RpcApplication;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.config.RpcConfigWrapper;
+import com.yupi.yurpc.serializer.Serializer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -38,8 +39,7 @@ public class ConfigTest {
 
     @Test
     public void simpleTest(){
-        char c = '空';
-        System.out.println(c);
+        System.out.println(Serializer.class.getName());
 
     }
 }
