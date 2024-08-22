@@ -40,8 +40,10 @@ public class ServiceProxy implements InvocationHandler {
             RpcConfig rpcConfig = RpcConfig.getRpcConfig();
             RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
             Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
-            registry.init(registryConfig);
             List<ServiceMetaInfo> serviceMetaInfoList = registry.discoveryServices(String.format("%s:%s", rpcRequest.getServiceName(), rpcRequest.getServiceVersion()));
+            if (serviceMetaInfoList == null || serviceMetaInfoList.isEmpty()) {
+                throw new RuntimeException("no service found");
+            }
             // todo 从服务列表挑选一个服务
             ServiceMetaInfo serviceMetaInfo = serviceMetaInfoList.get(0);
             String serverHost = serviceMetaInfo.getServiceHost();

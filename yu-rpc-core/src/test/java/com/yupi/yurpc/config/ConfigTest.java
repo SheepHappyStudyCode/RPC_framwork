@@ -1,6 +1,5 @@
 package com.yupi.yurpc.config;
 
-import com.yupi.yurpc.serializer.Serializer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -36,7 +35,9 @@ public class ConfigTest {
 
     @Test
     public void simpleTest(){
-        System.out.println(Serializer.class.getName());
+        String s = "/rpc/";
+        s.split("/")
+        System.out.println(s.split("/"));
 
     }
 }

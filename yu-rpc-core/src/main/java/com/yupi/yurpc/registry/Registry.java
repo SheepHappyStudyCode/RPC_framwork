@@ -15,4 +15,8 @@ public interface Registry {
     void unRegister(ServiceMetaInfo serviceMetaInfo);
 
     List<ServiceMetaInfo> discoveryServices(String serviceKey);
+
+    void heartBeat();
+
+    void watch(String serviceNode);
 }
