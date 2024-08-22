@@ -1,4 +1,4 @@
-package com.yupi.rpc.mock;
+package com.yupi.yurpc.mock;
 
 import org.junit.Test;
 

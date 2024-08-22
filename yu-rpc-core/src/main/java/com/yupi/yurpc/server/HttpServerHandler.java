@@ -1,6 +1,6 @@
 package com.yupi.yurpc.server;
 
-import com.yupi.yurpc.RpcApplication;
+import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
 import com.yupi.yurpc.registry.LocalRegistry;
@@ -22,7 +22,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
         System.out.println("receive request: " + request.method() + " " + request.uri());
 
         // 指定序列化器
-        Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
+        Serializer serializer = SerializerFactory.getInstance(RpcConfig.getRpcConfig().getSerializer());
 
         // 异步处理 http 请求
         request.bodyHandler(body ->{

@@ -3,8 +3,14 @@ package com.yupi.yurpc.registry;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 本地注册器
+ */
 public class LocalRegistry {
 
+    /**
+     * 服务名 => 实现类
+     */
     private static final Map<String, Class<?>> map = new ConcurrentHashMap<>();
 
     public static void register(String serviceName, Class<?> implClass){

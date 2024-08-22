@@ -14,6 +14,8 @@ import java.io.Serializable;
 public class RpcRequest implements Serializable {
     private String serviceName;
 
+    private String serviceVersion;
+
     private String methodName;
 
     private Class<?>[] parameterTypes;

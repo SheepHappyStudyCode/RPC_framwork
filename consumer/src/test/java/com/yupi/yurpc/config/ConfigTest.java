@@ -1,8 +1,6 @@
-package com.yupi.rpc.config;
+package com.yupi.yurpc.config;
 
 import com.yupi.yurpc.RpcApplication;
-import com.yupi.yurpc.config.RpcConfig;
-import com.yupi.yurpc.config.RpcConfigWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
@@ -31,7 +29,7 @@ public class ConfigTest {
 
     @Test
     public void testRpcConfig() throws FileNotFoundException {
-        RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        RpcConfig rpcConfig = RpcConfig.getRpcConfig();
         System.out.println(rpcConfig);
 
     }

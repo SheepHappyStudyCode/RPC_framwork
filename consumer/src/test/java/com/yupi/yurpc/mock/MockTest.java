@@ -1,4 +1,4 @@
-package com.yupi.rpc.mock;
+package com.yupi.yurpc.mock;
 
 import com.yupi.common.model.User;
 import com.yupi.common.service.UserService;

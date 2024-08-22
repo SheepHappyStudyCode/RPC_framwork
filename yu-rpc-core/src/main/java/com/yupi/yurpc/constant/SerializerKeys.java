@@ -1,4 +1,4 @@
-package com.yupi.yurpc.serializer;
+package com.yupi.yurpc.constant;
 
 /**
  * 序列化器键名常量
