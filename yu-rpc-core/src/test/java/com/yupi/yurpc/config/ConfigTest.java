@@ -36,7 +36,7 @@ public class ConfigTest {
     @Test
     public void simpleTest(){
         String s = "/rpc/";
-        s.split("/")
+        s.split("/");
         System.out.println(s.split("/"));
 
     }

@@ -1,5 +1,5 @@
 package com.yupi.yurpc.server;
 
-public interface HttpServer {
+public interface Server {
     void doStart(int port);
 }

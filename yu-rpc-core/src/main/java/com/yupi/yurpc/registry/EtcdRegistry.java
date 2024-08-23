@@ -34,6 +34,9 @@ public class EtcdRegistry implements Registry{
      */
     private final Set<String> localRegisterNodeKeySet = new HashSet<>();
 
+    /**
+     * 缓存
+     */
     private final RegistryServiceCache localCache = new RegistryServiceCache();
 
     private final Set<String> watchingKeySet = new ConcurrentHashSet<>();
@@ -216,6 +219,7 @@ public class EtcdRegistry implements Registry{
      */
     @Override
     public void watch(String serviceNode) {
+        // 检查该节点是否已经在检测列表中
         boolean add = watchingKeySet.add(serviceNode);
         if(add){
             String serviceKey = serviceNode.split("/")[2];

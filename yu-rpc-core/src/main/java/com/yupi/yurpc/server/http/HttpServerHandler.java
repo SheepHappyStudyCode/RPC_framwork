@@ -1,4 +1,4 @@
-package com.yupi.yurpc.server;
+package com.yupi.yurpc.server.http;
 
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.model.RpcRequest;

@@ -1,8 +1,9 @@
-package com.yupi.yurpc.server;
+package com.yupi.yurpc.server.http;
 
+import com.yupi.yurpc.server.Server;
 import io.vertx.core.Vertx;
 
-public class VertxHttpServer implements HttpServer{
+public class VertxHttpServer implements Server {
     @Override
     public void doStart(int port) {
         // 创建 Vert.x 实例
