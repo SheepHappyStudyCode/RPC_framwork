@@ -1,8 +1,8 @@
 package com.yupi.yurpc.config;
 
 import com.yupi.yurpc.constant.SerializerKeys;
-import com.yupi.yurpc.fault.retry.RetryStategyKeys;
-import com.yupi.yurpc.fault.tolerant.TolerantStategyKeys;
+import com.yupi.yurpc.fault.retry.RetryStrategyKeys;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategyKeys;
 import com.yupi.yurpc.utils.ConfigUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +57,9 @@ public class RpcConfig {
 
     private String loadBalancer = "random";
 
-    private String retryStrategy = RetryStategyKeys.FIXED_INTERVAL;
+    private String retryStrategy = RetryStrategyKeys.FIXED_INTERVAL;
 
-    private String tolerantStrategy = TolerantStategyKeys.FAIL_FAST;
+    private String tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
 
     private RegistryConfig registryConfig = new RegistryConfig();
 }
