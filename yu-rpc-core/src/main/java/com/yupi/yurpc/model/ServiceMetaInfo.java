@@ -24,7 +24,11 @@ public class ServiceMetaInfo {
         return String.format("%s:%s", serviceName, serviceVersion);
     }
 
+    public String getServiceAddress(){
+        return String.format("%s:%s", serviceHost, servicePort);
+    }
+
     public String getServiceNodeKey(){
-        return String.format("%s/%s:%s", getServiceKey(), serviceHost, servicePort);
+        return String.format("%s/%s", getServiceKey(), getServiceAddress());
     }
 }

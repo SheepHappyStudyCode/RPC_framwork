@@ -53,5 +53,7 @@ public class RpcConfig {
 
     private String serializer = SerializerKeys.JDK;
 
+    private String loadBalancer = "random";
+
     private RegistryConfig registryConfig = new RegistryConfig();
 }

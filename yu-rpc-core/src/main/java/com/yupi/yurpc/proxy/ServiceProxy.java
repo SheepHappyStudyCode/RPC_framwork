@@ -3,6 +3,8 @@ package com.yupi.yurpc.proxy;
 import com.yupi.yurpc.config.RegistryConfig;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.constant.RpcConstant;
+import com.yupi.yurpc.loadbalancer.LoadBalancer;
+import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
 import com.yupi.yurpc.model.RpcResponse;
 import com.yupi.yurpc.model.ServiceMetaInfo;
@@ -12,7 +14,9 @@ import com.yupi.yurpc.server.tcp.VertxTcpClient;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceProxy implements InvocationHandler {
     @Override
@@ -27,7 +31,7 @@ public class ServiceProxy implements InvocationHandler {
                 build();
 
         try {
-            // 发送请求
+            // 寻找服务
             RpcConfig rpcConfig = RpcConfig.getRpcConfig();
             RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
             Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
@@ -36,9 +40,11 @@ public class ServiceProxy implements InvocationHandler {
                 throw new RuntimeException("no service found");
             }
             // todo 从服务列表挑选一个服务
-            ServiceMetaInfo serviceMetaInfo = serviceMetaInfoList.get(0);
-
-
+//            ServiceMetaInfo serviceMetaInfo = serviceMetaInfoList.get(0);
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("method", rpcRequest.getMethodName());
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发送 TCP 请求
             RpcResponse response = VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo);
             return response.getData();
