@@ -3,6 +3,8 @@ package com.yupi.yurpc.proxy;
 import com.yupi.yurpc.config.RegistryConfig;
 import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.constant.RpcConstant;
+import com.yupi.yurpc.fault.retry.RetryStrategy;
+import com.yupi.yurpc.fault.retry.RetryStrategyFactory;
 import com.yupi.yurpc.loadbalancer.LoadBalancer;
 import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
@@ -39,14 +41,17 @@ public class ServiceProxy implements InvocationHandler {
             if (serviceMetaInfoList == null || serviceMetaInfoList.isEmpty()) {
                 throw new RuntimeException("no service found");
             }
-            // todo 从服务列表挑选一个服务
-//            ServiceMetaInfo serviceMetaInfo = serviceMetaInfoList.get(0);
+
+            // 负载均衡
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("method", rpcRequest.getMethodName());
             LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
             ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发送 TCP 请求
-            RpcResponse response = VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo);
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+            RpcResponse response = retryStrategy.retry(() ->
+                VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo)
+            );
             return response.getData();
 
 
