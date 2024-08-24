@@ -2,7 +2,7 @@ package com.yupi.consumer;
 
 import com.yupi.common.model.User;
 import com.yupi.common.service.UserService;
-import com.yupi.yurpc.RpcApplication;
+import com.yupi.yurpc.bootstrap.ConsumerBootstrap;
 import com.yupi.yurpc.proxy.ServiceProxyFactory;
 
 /**
@@ -13,8 +13,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        RpcApplication.init();
-
+        ConsumerBootstrap.init();
         UserService userService = ServiceProxyFactory.getProxy(UserService.class);
 
         User user = new User();
@@ -29,10 +28,6 @@ public class App
 
             }
         }
-
-
-
-
 
     }
 }
