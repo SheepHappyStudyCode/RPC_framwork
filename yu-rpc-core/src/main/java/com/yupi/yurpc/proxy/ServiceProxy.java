@@ -5,6 +5,8 @@ import com.yupi.yurpc.config.RpcConfig;
 import com.yupi.yurpc.constant.RpcConstant;
 import com.yupi.yurpc.fault.retry.RetryStrategy;
 import com.yupi.yurpc.fault.retry.RetryStrategyFactory;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategy;
+import com.yupi.yurpc.fault.tolerant.TolerantStrategyFactory;
 import com.yupi.yurpc.loadbalancer.LoadBalancer;
 import com.yupi.yurpc.loadbalancer.LoadBalancerFactory;
 import com.yupi.yurpc.model.RpcRequest;
@@ -31,35 +33,34 @@ public class ServiceProxy implements InvocationHandler {
                 .args(args)
                 .serviceVersion(RpcConstant.DEFAULT_SERVICE_VERSION).
                 build();
+        // 寻找服务
+        RpcConfig rpcConfig = RpcConfig.getRpcConfig();
+        RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
+        Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        List<ServiceMetaInfo> serviceMetaInfoList = registry.discoveryServices(String.format("%s:%s", rpcRequest.getServiceName(), rpcRequest.getServiceVersion()));
+        if (serviceMetaInfoList == null || serviceMetaInfoList.isEmpty()) {
+            throw new RuntimeException("no service found");
+        }
 
+        // 负载均衡
+        Map<String, Object> requestParams = new HashMap<>();
+        requestParams.put("method", rpcRequest.getMethodName());
+        LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+        ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+        RpcResponse response;
         try {
-            // 寻找服务
-            RpcConfig rpcConfig = RpcConfig.getRpcConfig();
-            RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
-            Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
-            List<ServiceMetaInfo> serviceMetaInfoList = registry.discoveryServices(String.format("%s:%s", rpcRequest.getServiceName(), rpcRequest.getServiceVersion()));
-            if (serviceMetaInfoList == null || serviceMetaInfoList.isEmpty()) {
-                throw new RuntimeException("no service found");
-            }
-
-            // 负载均衡
-            Map<String, Object> requestParams = new HashMap<>();
-            requestParams.put("method", rpcRequest.getMethodName());
-            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
-            ServiceMetaInfo serviceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             // 发送 TCP 请求
             RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
-            RpcResponse response = retryStrategy.retry(() ->
+            response = retryStrategy.retry(() ->
                 VertxTcpClient.doRequest(rpcRequest, serviceMetaInfo)
             );
-            return response.getData();
-
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+            TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
+            response = tolerantStrategy.doTolerant(null, e);        }
 
-        return null;
+        return response.getData();
     }
 }
 
