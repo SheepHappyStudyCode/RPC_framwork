@@ -1,11 +1,12 @@
 package com.yupi.yurpc.utils;
 
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yupi.yurpc.config.RpcConfig;
-import com.yupi.yurpc.config.RpcConfigWrapper;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
+import java.util.Map;
 
 public class ConfigUtils {
 
@@ -18,10 +19,11 @@ public class ConfigUtils {
 
         Yaml yaml = new Yaml();
         try {
-            InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(configFileStringBuilder.toString());
-//            InputStream input = new RpcApplication().getClass().getClassLoader().getResourceAsStream(configFileStringBuilder.toString());
-            RpcConfigWrapper configWrapper = yaml.loadAs(input, RpcConfigWrapper.class);
-            RpcConfig rpcConfig = configWrapper.getRpc();
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(configFileStringBuilder.toString());
+            Map map = (Map ) yaml.load(inputStream);
+            Map rpcConfigMap = (Map)map.get("rpc");
+            ObjectMapper objectMapper = new ObjectMapper();
+            RpcConfig rpcConfig = objectMapper.convertValue(rpcConfigMap, RpcConfig.class);
             return rpcConfig;
         } catch (Exception e) {
             e.printStackTrace();

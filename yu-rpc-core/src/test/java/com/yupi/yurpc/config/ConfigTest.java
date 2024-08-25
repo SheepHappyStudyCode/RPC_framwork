@@ -1,11 +1,14 @@
 package com.yupi.yurpc.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Map;
+
 
 @Slf4j
 public class ConfigTest {
@@ -15,10 +18,13 @@ public class ConfigTest {
         Yaml yaml = new Yaml();
         try {
 
-            RpcConfigWrapper configWrapper = yaml.loadAs(inputStream, RpcConfigWrapper.class);
-            RpcConfig rpcConfig = configWrapper.getRpc();
-            System.out.println(configWrapper);
+            Map map = (Map ) yaml.load(inputStream);
+            Map rpcConfigMap = (Map)map.get("rpc");
+            ObjectMapper objectMapper = new ObjectMapper();
+            RpcConfig rpcConfig = objectMapper.convertValue(rpcConfigMap, RpcConfig.class);
             System.out.println(rpcConfig);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

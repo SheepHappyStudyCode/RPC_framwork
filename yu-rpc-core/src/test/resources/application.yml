@@ -1,5 +1,10 @@
 rpc:
-  name: yurpc
-  serverHost: 127.0.0.1
-  serverPort: 8084
+  name: yurpc-test
+  serverHost: 122.0.0.1
+  serverPort: 9000
   mock: true
+  registryConfig:
+    registry: zookeeper
+
+spring:
+  port: 7243

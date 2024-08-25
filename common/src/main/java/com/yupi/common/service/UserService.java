@@ -8,4 +8,6 @@ public interface UserService {
     default int getNumber(User user){
         return 1;
     }
+
+    String getString(User user);
 }
