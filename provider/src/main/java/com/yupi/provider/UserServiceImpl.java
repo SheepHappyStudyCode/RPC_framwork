@@ -11,4 +11,9 @@ public class UserServiceImpl implements UserService {
         user.setUsername("newUsername");
         return user;
     }
+
+    @Override
+    public String getString(User user) {
+        return user.toString();
+    }
 }

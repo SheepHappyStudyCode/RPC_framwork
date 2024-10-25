@@ -18,6 +18,7 @@ public class ServiceProxyFactory{
                     new Class[]{serviceClass},
                     new MockServiceProxy());
         }
+
         // 否则返回普通代理对象
         return (T) Proxy.newProxyInstance(
                 serviceClass.getClassLoader(),

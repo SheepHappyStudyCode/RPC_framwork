@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 动态代理对象
+ */
 public class ServiceProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args){
@@ -31,8 +34,8 @@ public class ServiceProxy implements InvocationHandler {
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
                 .args(args)
-                .serviceVersion(RpcConstant.DEFAULT_SERVICE_VERSION).
-                build();
+                .serviceVersion(RpcConstant.DEFAULT_SERVICE_VERSION)
+                .build();
         // 寻找服务
         RpcConfig rpcConfig = RpcConfig.getRpcConfig();
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();

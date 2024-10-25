@@ -74,6 +74,7 @@ public class VertxTcpClient {
                                 }
                             }
                     );
+
                     socket.handler(bufferHandlerWrapper);
 
                 });

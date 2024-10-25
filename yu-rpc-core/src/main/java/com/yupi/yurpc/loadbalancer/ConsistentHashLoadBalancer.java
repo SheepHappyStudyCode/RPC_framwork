@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * 轮询负载均衡器
+ * 一致性哈希 负载均衡器
  */
 public class ConsistentHashLoadBalancer implements LoadBalancer{
 

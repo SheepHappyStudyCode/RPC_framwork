@@ -35,7 +35,7 @@ public class EtcdRegistry implements Registry{
     private final Set<String> localRegisterNodeKeySet = new HashSet<>();
 
     /**
-     * 缓存
+     * 服务信息缓存（消费端）
      */
     private final RegistryServiceCache localCache = new RegistryServiceCache();
 
@@ -215,6 +215,7 @@ public class EtcdRegistry implements Registry{
     /**
      * 监听服务节点 （消费端）
      * 主要与缓存搭配使用
+     * 目的是维护本地缓存和 Etcd 缓存的一致性
      * @param serviceNode
      */
     @Override
@@ -243,8 +244,6 @@ public class EtcdRegistry implements Registry{
 
             });
         }
-
-
     }
 }
 

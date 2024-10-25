@@ -30,12 +30,15 @@ public class RpcConsumerBootstrap implements BeanPostProcessor {
         Field[] declaredFields = beanClass.getDeclaredFields();
         for (Field field : declaredFields) {
             RpcReference rpcReference = field.getAnnotation(RpcReference.class);
+            // 如果存在 RpcReference 注解，则注入代理对象
             if (rpcReference != null) {
                 // 为属性生成代理对象
                 Class<?> interfaceClass = rpcReference.interfaceClass();
                 if (interfaceClass == void.class) {
                     interfaceClass = field.getType();
                 }
+
+                // 注入代理对象
                 field.setAccessible(true);
                 Object proxyObject = ServiceProxyFactory.getProxy(interfaceClass);
                 try {

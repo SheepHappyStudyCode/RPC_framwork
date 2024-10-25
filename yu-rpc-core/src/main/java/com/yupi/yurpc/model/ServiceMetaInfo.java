@@ -2,6 +2,9 @@ package com.yupi.yurpc.model;
 
 import lombok.Data;
 
+/**
+ * 在注册中心注册的服务信息
+ */
 @Data
 public class ServiceMetaInfo {
     /**

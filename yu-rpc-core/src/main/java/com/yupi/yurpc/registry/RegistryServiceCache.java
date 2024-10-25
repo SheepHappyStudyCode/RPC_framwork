@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Data
 public class RegistryServiceCache {
+    // 服务名 =》 服务信息列表
     Map<String, List<ServiceMetaInfo>> map =  new HashMap<>();
 
     public void writeCache(String serviceKey, List<ServiceMetaInfo> serviceMetaInfoList) {

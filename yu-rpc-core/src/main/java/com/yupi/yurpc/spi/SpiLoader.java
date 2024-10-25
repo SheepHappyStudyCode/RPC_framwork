@@ -26,7 +26,7 @@ public class SpiLoader {
     private static Map<String, Map<String, Class<?>>> loaderMap = new ConcurrentHashMap<>();
 
     /**
-     * 对象实例缓存（避免重复 new），类路径 => 对象实例，单例模式
+     * 对象实例缓存（避免重复 new），类的全路径 => 对象实例，单例模式
      */
     private static Map<String, Object> instanceCache = new ConcurrentHashMap<>();
 
@@ -63,8 +63,8 @@ public class SpiLoader {
     /**
      * 获取某个接口的实例
      *
-     * @param tClass
-     * @param key
+     * @param tClass 目标接口
+     * @param key 实现类标识
      * @param <T>
      * @return
      */
@@ -95,7 +95,7 @@ public class SpiLoader {
     /**
      * 加载某个类型
      *
-     * @param loadClass
+     * @param loadClass 服务接口
      * @throws IOException
      */
     public static Map<String, Class<?>> load(Class<?> loadClass) {
